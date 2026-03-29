@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Inscreva-se — Receba Novidades</title>
+  <meta name="description" content="Inscreva-se para receber novidades e conteúdos exclusivos." />
+  <style>
+    :root{
+      --bg:#0f1724; --card:#0b1220; --accent:#06b6d4; --muted:#94a3b8; --white:#e6eef6;
+      --radius:12px; font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+    }
+    *{box-sizing:border-box} html,body{height:100%}
+    body{
+      margin:0; background:linear-gradient(180deg,#071025 0%,var(--bg) 100%);
+      color:var(--white); display:flex; align-items:center; justify-content:center; padding:32px;
+    }
+    .container{
+      width:100%; max-width:900px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border:1px solid rgba(255,255,255,0.04); border-radius:var(--radius); padding:28px; display:grid; grid-template-columns:1fr 360px; gap:24px; align-items:center;
+      box-shadow:0 10px 30px rgba(2,6,23,0.6);
+    }
+    .left h1{margin:0 0 12px;font-size:28px;line-height:1.05}
+    .left p{margin:0 0 18px;color:var(--muted)}
+    .benefits{display:flex;flex-direction:column;gap:10px}
+    .benefit{display:flex;gap:12px;align-items:flex-start}
+    .badge{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#7dd3fc);display:flex;align-items:center;justify-content:center;color:#062025;font-weight:700}
+    .right{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:20px; border-radius:10px; border:1px solid rgba(255,255,255,0.03)}
+    form{display:flex;flex-direction:column;gap:12px}
+    label{font-size:13px;color:var(--muted)}
+    input[type="text"],input[type="email"]{
+      width:100%; padding:12px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.04); background:transparent;color:var(--white);
+      outline:none; transition:box-shadow .15s, border-color .15s;
+    }
+    input:focus{box-shadow:0 4px 18px rgba(6,182,212,0.12); border-color:rgba(6,182,212,0.6)}
+    button{
+      background:linear-gradient(90deg,var(--accent),#34d399); border:0; color:#012226; font-weight:700; padding:12px;border-radius:10px; cursor:pointer;
+      transition:transform .12s, box-shadow .12s;
+    }
+    button:active{transform:translateY(1px)}
+    .small{font-size:13px;color:var(--muted);text-align:center;margin-top:8px}
+    .foot{font-size:12px;color:var(--muted);margin-top:14px;text-align:center}
+    .success{background:linear-gradient(90deg,#10b981,#34d399); color:#062014; padding:10px;border-radius:8px;text-align:center;font-weight:700}
+    .hidden{display:none}
+    @media (max-width:840px){
+      .container{grid-template-columns:1fr; padding:20px}
+    }
+  </style>
+</head>
+<body>
+  <div class="container" role="main" aria-labelledby="title">
+    <div class="left">
+      <h1 id="title">Receba novidades e conteúdos exclusivos</h1>
+      <p>Cadastre seu email para acesso antecipado, descontos e materiais gratuitos enviados diretamente para sua caixa de entrada.</p>
+
+      <div class="benefits" aria-hidden="false">
+        <div class="benefit">
+          <div class="badge">1</div>
+          <div>
+            <strong>Conteúdo exclusivo</strong>
+            <div style="color:var(--muted);font-size:13px">Guias, modelos e dicas práticas</div>
+          </div>
+        </div>
+
+        <div class="benefit">
+          <div class="badge">2</div>
+          <div>
+            <strong>Ofertas antecipadas</strong>
+            <div style="color:var(--muted);font-size:13px">Descontos só para inscritos</div>
+          </div>
+        </div>
+
+        <div class="benefit">
+          <div class="badge">3</div>
+          <div>
+            <strong>Zero spam</strong>
+            <div style="color:var(--muted);font-size:13px">Mensagens relevantes e raras</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="foot">Ao se cadastrar você concorda em receber emails. Você pode cancelar a qualquer momento.</div>
+    </div>
+
+    <aside class="right" aria-label="Formulário de inscrição">
+      <form id="capture-form">
+        <div>
+          <label for="name">Nome</label>
+          <input id="name" name="user_name" type="text" autocomplete="name" placeholder="Seu nome" required>
+        </div>
+        <div>
+          <label for="email">Email</label>
+          <input id="email" name="user_email" type="email" autocomplete="email" placeholder="seu@exemplo.com" required>
+        </div>
+
+        <input type="hidden" name="source" value="landing-page">
+
+        <button type="submit" id="submit-btn">Quero receber</button>
+
+        <div id="status" class="small" role="status" aria-live="polite" style="min-height:20px"></div>
+
+        <div id="success-box" class="success hidden" role="status" aria-live="polite">Obrigado! Confira seu email em breve.</div>
+      </form>
+
+      <div style="margin-top:12px;font-size:12px;color:var(--muted);text-align:center">Privacidade respeitada • Sem spam</div>
+    </aside>
+  </div>
+
+  <!-- EmailJS SDK -->
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script>
+    // Substitua pelos seus IDs do EmailJS
+    const EMAILJS_USER_ID = 'irMj45t3AL0ig7KMI';
+    const EMAILJS_SERVICE_ID = 'service_aeh748f';
+    const EMAILJS_TEMPLATE_ID = 'template_rx5d91h';
+
+    (function(){
+      if(window.emailjs){ emailjs.init('irMj45t3AL0ig7KMI')}
+    })();
+
+    const form = document.getElementById('capture-form');
+    const submitBtn = document.getElementById('submit-btn');
+    const statusEl = document.getElementById('status');
+    const successBox = document.getElementById('success-box');
+
+    function setLoading(on){
+      submitBtn.disabled = on;
+      submitBtn.style.opacity = on ? 0.7 : 1;
+      submitBtn.textContent = on ? 'Enviando...' : 'Quero receber';
+    }
+
+    form.addEventListener('submit', function(ev){
+      ev.preventDefault();
+      statusEl.textContent = '';
+      successBox.classList.add('hidden');
+
+      const name = form.user_name.value.trim();
+      const email = form.user_email.value.trim();
+      if(!name || !email){ statusEl.textContent = 'Preencha nome e email.'; return; }
+
+      setLoading(true);
+
+      const templateParams = {
+        user_name: name,
+        user_email: email,
+        source: form.source.value
+      };
+
+      // Envio via EmailJS
+      emailjs.send('service_aeh748f', 'template_rx5d91h', templateParams)
+        .then(function(response){
+          setLoading(false);
+          if(response && response.status === 200){
+            successBox.classList.remove('hidden');
+            form.reset();
+            statusEl.textContent = '';
+          } else {
+            statusEl.textContent = 'Recebemos sua solicitação, mas ocorreu um problema. Tente novamente.';
+          }
+        }, function(error){
+          setLoading(false);
+          statusEl.textContent = 'Erro ao enviar. Verifique sua conexão e tente novamente.';
+          console.error('EmailJS error:', error);
+        });
+    });
+
+    // Pequena validação de email no cliente
+ //   document.getElementById('email').addEventListener('input', function(){
+      const v = this.value;
+      const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+      this.style.borderColor = v.length === 0 ? '' : (ok ? 'rgba(34,197,94,0.6)' : 'rgba(239,68,68,0.6)');
+    });
+
+ </script>
+</body>
+</html>
